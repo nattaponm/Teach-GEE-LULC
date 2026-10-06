@@ -198,10 +198,90 @@ $$ \mathbf{x}_{S2} = [ B2,B3,B4,B8,B11,B12, NDVI,NDWI,NDBI ] $$
 
 ### Random Forest
 
-ถ้ามี decision trees จำนวน $B$ ต้น
+Random Forest (RF) เป็น **ensemble classifier** ที่ไม่ได้ใช้ decision tree เพียงต้นเดียว แต่สร้าง decision trees หลายต้น แล้วให้แต่ละต้นช่วยกันทำนาย class ของ pixel
 
-$$ \hat{y} = \operatorname{mode} \left[ h_1(\mathbf{x}), h_2(\mathbf{x}), \dots, h_B(\mathbf{x}) \right] $$
+<p align="center">
+  <img src="assets/random_forest_lulc_concept.png"
+       alt="Random Forest concept for LULC classification"
+       width="950">
+</p>
 
+#### แนวคิดการจำแนกแบบ Random Forest
+
+สำหรับ pixel หนึ่งตำแหน่ง เราเริ่มจากชุดตัวแปร predictor เช่น
+
+```text
+Sentinel-2:
+B2, B3, B4, B8, B11, B12, NDVI, NDWI, NDBI
+
+Sentinel-1:
+VV, VH, monthly VV/VH
+```
+
+ข้อมูลของ pixel จะถูกส่งเข้า decision trees หลายต้น
+
+```text
+Predictor values of one pixel
+          ↓
+ ┌────────┼────────┐
+ ↓        ↓        ↓
+Tree 1   Tree 2   Tree 3  ... Tree B
+ ↓        ↓        ↓
+Urban   Forest   Urban    ...
+ └────────┼────────┘
+          ↓
+    Majority vote
+          ↓
+ Final predicted class
+```
+
+Random Forest มีหลักการสำคัญ 4 ขั้นตอน
+
+1. **Bootstrap sampling** — สุ่มตัวอย่างจาก training data เพื่อสร้างชุดข้อมูลฝึกสำหรับต้นไม้แต่ละต้น
+2. **Random subset of predictors** — ที่แต่ละ node ต้นไม้จะพิจารณา predictor เพียงบางส่วน ไม่ได้ใช้ตัวแปรทั้งหมดพร้อมกันทุกครั้ง
+3. **Grow many decision trees** — สร้าง decision trees หลายต้น โดยแต่ละต้นเรียนรู้รูปแบบที่แตกต่างกันเล็กน้อย
+4. **Majority vote** — แต่ละต้นทำนาย class หนึ่งค่า แล้วเลือก class ที่ได้รับเสียงมากที่สุดเป็นผลลัพธ์สุดท้าย
+
+เขียนเป็นแนวคิดง่าย ๆ ได้ว่า
+
+```text
+Final class = majority vote(Tree 1, Tree 2, ..., Tree B)
+```
+
+โดย
+
+- `B` = จำนวน decision trees
+- `x` = predictor values ของ pixel
+- ผลลัพธ์ของแต่ละ tree = class ที่ต้นไม้นั้นทำนาย
+- final prediction = class ที่มีจำนวน votes มากที่สุด
+
+#### ทำไม Random Forest จึงเหมาะกับ LULC classification?
+
+Random Forest เหมาะกับข้อมูล Remote Sensing เพราะสามารถ
+
+- ใช้ predictor หลายชนิดร่วมกัน เช่น spectral bands, spectral indices, VV และ VH
+- จัดการความสัมพันธ์แบบไม่เป็นเส้นตรงระหว่าง predictor กับ land-cover class
+- ลดความไวต่อ decision tree ต้นเดียวด้วยการรวมผลจากหลาย trees
+- ใช้กับข้อมูลหลาย sensor และหลายช่วงเวลาได้
+- ประเมิน **variable importance** เพื่อดูว่า predictor ใดมีบทบาทต่อ model
+
+> **สำคัญ:** Random Forest ไม่ได้ “มองเห็นภาพ” แบบมนุษย์ แต่เรียนรู้จากรูปแบบของค่าตัวเลขใน predictor vector ของแต่ละ pixel
+
+workflow ของ supervised classification จึงเป็น
+
+```text
+Reference samples
+      +
+Predictor variables
+      ↓
+Train Random Forest
+      ↓
+Apply model to every pixel
+      ↓
+Predicted LULC map
+      ↓
+Validate with independent reference points
+```
 ### Confusion matrix
 
 ให้ $n_{ij}$ เป็นจำนวน reference samples ของ class $i$ ที่ถูกจำแนกเป็น class $j$
