@@ -69,7 +69,7 @@ https://www.youtube.com/playlist?list=PL2e-NEAjUyLEThjWtOqUyVtzBZcIm_Ha4
 
 แนวทางการเรียนรู้ของ repository นี้คือ
 
-$$
+```math
 \boxed{
 \text{Observe}
 \rightarrow
@@ -85,7 +85,7 @@ $$
 \rightarrow
 \text{Explain}
 }
-$$
+```
 
 ### Observe
 ดูข้อมูลดาวเทียมและ spatial pattern ก่อนเริ่มคำนวณ
@@ -243,7 +243,15 @@ data/phitsanulok_lulc_points.csv
 
 # Core concepts and equations
 
-GitHub รองรับ mathematical expressions ใน Markdown ดังนั้นสมการด้านล่างสามารถ render ได้โดยตรงด้วย `$$ ... $$`
+สมการแบบ block ใน README นี้ใช้ **GitHub fenced math syntax** เพื่อให้แสดงผลได้เสถียรทั้งบนหน้า GitHub และเมื่อเปิดดู source:
+
+````markdown
+```math
+NDVI = \frac{B8-B4}{B8+B4}
+```
+````
+
+สำหรับสมการสั้นในบรรทัดเดียวสามารถใช้ `$ ... $` ได้
 
 <details>
 <summary><b>Notebook 01 — Sentinel-2 Point Classification</b></summary>
@@ -252,67 +260,67 @@ GitHub รองรับ mathematical expressions ใน Markdown ดังน�
 
 Sentinel-2 Surface Reflectance digital numbers ถูก scale เป็น reflectance:
 
-$$
+```math
 \rho = DN \times 10^{-4}
-$$
+```
 
 ## NDVI
 
-$$
+```math
 NDVI =
 \frac{B8-B4}{B8+B4}
-$$
+```
 
 NDVI ใช้วัด relative vegetation greenness แต่
 
-$$
+```math
 NDVI \neq \text{Forest class}
-$$
+```
 
 ## NDWI
 
-$$
+```math
 NDWI =
 \frac{B3-B8}{B3+B8}
-$$
+```
 
 และ
 
-$$
+```math
 NDWI \neq \text{Water class}
-$$
+```
 
 ## NDBI
 
-$$
+```math
 NDBI =
 \frac{B11-B8}{B11+B8}
-$$
+```
 
 และ
 
-$$
+```math
 NDBI \neq \text{Urban class}
-$$
+```
 
 indices เหล่านี้เป็น **predictor variables** ไม่ใช่ class labels
 
 ## Sentinel-2 feature vector
 
-$$
+```math
 \mathbf{x}_{S2}
 =
 [
 B2,B3,B4,B8,B11,B12,
 NDVI,NDWI,NDBI
 ]
-$$
+```
 
 ## Random Forest classification
 
 ถ้ามี decision trees จำนวน $B$ ต้น
 
-$$
+```math
 \hat y
 =
 \operatorname{mode}
@@ -322,7 +330,7 @@ h_2(\mathbf{x}),
 \dots,
 h_B(\mathbf{x})
 ]
-$$
+```
 
 ## Confusion matrix
 
@@ -330,35 +338,35 @@ $$
 
 ### Overall Accuracy
 
-$$
+```math
 OA=
 \frac{\sum_i n_{ii}}{N}
-$$
+```
 
 ### Producer's Accuracy
 
-$$
+```math
 PA_i=
 \frac{n_{ii}}
 {\sum_j n_{ij}}
-$$
+```
 
 ### User's Accuracy
 
-$$
+```math
 UA_i=
 \frac{n_{ii}}
 {\sum_j n_{ji}}
-$$
+```
 
 ### F1 score
 
-$$
+```math
 F1_i=
 2
 \frac{PA_iUA_i}
 {PA_i+UA_i}
-$$
+```
 
 </details>
 
@@ -371,30 +379,30 @@ $$
 
 สำหรับ rectangle กว้าง $w$ และสูง $h$
 
-$$
+```math
 A_{window}=w\times h
-$$
+```
 
 สำหรับ 20 × 20 m:
 
-$$
+```math
 A_{window}=400~m^2
-$$
+```
 
 สำหรับ Sentinel-2 10-m pixel:
 
-$$
+```math
 A_{pixel}\approx10\times10=100~m^2
-$$
+```
 
 จำนวน output-grid pixels โดยประมาณ:
 
-$$
+```math
 n
 \approx
 \frac{A_{window}}
 {A_{pixel}}
-$$
+```
 
 ดังนั้น 20 × 20 m window ให้ประมาณ 4 output-grid samples แต่จำนวนจริงขึ้นกับ pixel-grid alignment, projection และ masking
 
@@ -402,25 +410,25 @@ $$
 
 ค่าที่ sensor วัดสามารถเขียนแนวคิดอย่างง่ายได้ว่า
 
-$$
+```math
 R_{pixel}
 \approx
 \sum_{k=1}^{K}f_kR_k
-$$
+```
 
 โดย
 
-$$
+```math
 \sum_{k=1}^{K}f_k=1
-$$
+```
 
 ## Important sampling concept
 
-$$
+```math
 n_{pixels}
 \neq
 n_{independent\ locations}
-$$
+```
 
 และ
 
@@ -435,22 +443,22 @@ $$
 
 ## Radar backscatter in decibels
 
-$$
+```math
 \sigma^0_{dB}
 =
 10\log_{10}
 \left(
 \sigma^0_{linear}
 \right)
-$$
+```
 
 ย้อนกลับ:
 
-$$
+```math
 \sigma^0_{linear}
 =
 10^{\sigma^0_{dB}/10}
-$$
+```
 
 ดังนั้น -10 dB มี backscatter สูงกว่า -20 dB
 
@@ -463,15 +471,15 @@ VH = Vertical transmit / Horizontal receive
 
 ## Polarization contrast
 
-$$
+```math
 D_{VV-VH}
 =
 VV_{dB}-VH_{dB}
-$$
+```
 
 และ
 
-$$
+```math
 VV_{dB}-VH_{dB}
 =
 10\log_{10}
@@ -479,13 +487,13 @@ VV_{dB}-VH_{dB}
 \frac{VV_{linear}}
 {VH_{linear}}
 \right)
-$$
+```
 
 ## Radar response
 
 Backscatter ไม่ได้ขึ้นกับ land cover เพียงอย่างเดียว
 
-$$
+```math
 \sigma^0
 =
 f(
@@ -496,24 +504,24 @@ f(
 \text{geometry},
 \dots
 )
-$$
+```
 
 ## Temporal backscatter profile
 
 สำหรับ class $c$ และเดือน $m$
 
-$$
+```math
 \tilde{\sigma}^{0}_{c,m}
 =
 \operatorname{median}
 \left(
 \sigma^{0}_{i,m}
 \right)
-$$
+```
 
 ## Annual SAR feature vector
 
-$$
+```math
 \mathbf{x}_{S1}
 =
 [
@@ -521,13 +529,13 @@ VV_{Jan},VH_{Jan},
 \dots,
 VV_{Dec},VH_{Dec}
 ]
-$$
+```
 
 ดังนั้น
 
-$$
+```math
 p=24
-$$
+```
 
 </details>
 
@@ -538,23 +546,23 @@ $$
 
 ## January baseline
 
-$$
+```math
 \mathbf{x}^{Jan}
 =
 [
 VV_{Jan},VH_{Jan}
 ]
-$$
+```
 
 ดังนั้น
 
-$$
+```math
 p=2
-$$
+```
 
 ## Annual multitemporal SAR
 
-$$
+```math
 \mathbf{x}^{Annual}
 =
 [
@@ -562,66 +570,66 @@ VV_{Jan},VH_{Jan},
 \dots,
 VV_{Dec},VH_{Dec}
 ]
-$$
+```
 
 ดังนั้น
 
-$$
+```math
 p=24
-$$
+```
 
 ## Model improvement
 
-$$
+```math
 \Delta OA
 =
 OA_{Annual}
 -
 OA_{Jan}
-$$
+```
 
 สำหรับ class $i$
 
-$$
+```math
 \Delta F1_i
 =
 F1_{Annual,i}
 -
 F1_{Jan,i}
-$$
+```
 
 ## Normalized variable importance
 
-$$
+```math
 I_j^*
 =
 \frac{I_j}
 {\sum_{k=1}^{p}I_k}
-$$
+```
 
 โดย
 
-$$
+```math
 \sum_j I_j^*=1
-$$
+```
 
 ## Importance aggregated by month
 
-$$
+```math
 I_m
 =
 I_{VV_m}
 +
 I_{VH_m}
-$$
+```
 
 ### Important interpretation rule
 
-$$
+```math
 \text{Variable importance}
 \neq
 \text{Causation}
-$$
+```
 
 </details>
 
@@ -632,107 +640,107 @@ $$
 
 ## Sentinel-2 feature space
 
-$$
+```math
 \mathbf{x}_{S2}\in\mathbb{R}^{9}
-$$
+```
 
 ## January Sentinel-1
 
-$$
+```math
 \mathbf{x}_{S1,Jan}\in\mathbb{R}^{2}
-$$
+```
 
 ## Same-period fusion
 
-$$
+```math
 \mathbf{x}_{Fusion,Jan}
 =
 [
 \mathbf{x}_{S2},
 \mathbf{x}_{S1,Jan}
 ]
-$$
+```
 
 ดังนั้น
 
-$$
+```math
 p=11
-$$
+```
 
 ## Optical + annual SAR fusion
 
-$$
+```math
 \mathbf{x}_{Fusion,Annual}
 =
 [
 \mathbf{x}_{S2},
 \mathbf{x}_{S1,Annual}
 ]
-$$
+```
 
 ดังนั้น
 
-$$
+```math
 p=33
-$$
+```
 
 ## Common valid-data support
 
 เพื่อให้ models ถูกเปรียบเทียบบน spatial support เดียวกัน
 
-$$
+```math
 M_{common}
 =
 M_{S2}
 \cap
 M_{S1}
-$$
+```
 
 ## Sensor-level importance
 
-$$
+```math
 I_{S2}
 =
 \sum_{j\in S2}
 I_j^*
-$$
+```
 
-$$
+```math
 I_{S1}
 =
 \sum_{j\in S1}
 I_j^*
-$$
+```
 
 ## Spatial disagreement
 
 สำหรับ maps สองชุด $C_A(x)$ และ $C_B(x)$
 
-$$
+```math
 D(x)=
 \begin{cases}
 0,& C_A(x)=C_B(x)\\
 1,& C_A(x)\neq C_B(x)
 \end{cases}
-$$
+```
 
 ### Important interpretation rule
 
-$$
+```math
 \text{Disagreement}
 \neq
 \text{Error}
-$$
+```
 
 และ
 
-$$
+```math
 \boxed{
 \text{More predictors}
 \neq
 \text{better model}
 }
-$$
+```
 
 </details>
 
@@ -751,13 +759,13 @@ $$
 
 ตัวอย่างนี้แสดงว่า same-period optical–SAR fusion ให้ผลดีที่สุดใน hold-out sample ชุดนี้ ขณะที่การเพิ่ม temporal predictors จำนวนมากไม่ได้ทำให้ accuracy สูงขึ้นเสมอ
 
-$$
+```math
 \boxed{
 \text{More data}
 \neq
 \text{more useful information}
 }
-$$
+```
 
 > Validation set มีจำนวนจำกัด ดังนั้นผลต่างเพียงหนึ่ง validation point สามารถเปลี่ยน Overall Accuracy ได้หลาย percentage points ผลลัพธ์จึงควรใช้เพื่อการเรียนรู้และเปรียบเทียบ methodology มากกว่าการอ้างความแม่นยำระดับภูมิภาค
 
