@@ -69,21 +69,7 @@ https://www.youtube.com/playlist?list=PL2e-NEAjUyLEThjWtOqUyVtzBZcIm_Ha4
 
 แนวทางการเรียนรู้ของ repository นี้คือ
 
-$$
-\text{Observe}
-\rightarrow
-\text{Interpret}
-\rightarrow
-\text{Sample}
-\rightarrow
-\text{Classify}
-\rightarrow
-\text{Validate}
-\rightarrow
-\text{Compare}
-\rightarrow
-\text{Explain}
-$$
+$$ \text{Observe} \rightarrow \text{Interpret} \rightarrow \text{Sample} \rightarrow \text{Classify} \rightarrow \text{Validate} \rightarrow \text{Compare} \rightarrow \text{Explain} $$
 
 ### Observe
 ดูข้อมูลดาวเทียมและ spatial pattern ก่อนเริ่มคำนวณ
@@ -189,60 +175,32 @@ OA / PA / UA / F1
 
 ### Surface reflectance scaling
 
-$$
-\rho = DN \times 10^{-4}
-$$
+$$ \rho = DN \times 10^{-4} $$
 
 ### NDVI
 
-$$
-NDVI =
-\frac{B8-B4}{B8+B4}
-$$
+$$ NDVI = \frac{B8-B4}{B8+B4} $$
 
 ### NDWI
 
-$$
-NDWI =
-\frac{B3-B8}{B3+B8}
-$$
+$$ NDWI = \frac{B3-B8}{B3+B8} $$
 
 ### NDBI
 
-$$
-NDBI =
-\frac{B11-B8}{B11+B8}
-$$
+$$ NDBI = \frac{B11-B8}{B11+B8} $$
 
 NDVI ไม่ใช่ Forest class, NDWI ไม่ใช่ Water class และ NDBI ไม่ใช่ Urban class โดยอัตโนมัติ  
 indices เหล่านี้เป็น **predictor variables**
 
 ### Sentinel-2 feature vector
 
-$$
-\mathbf{x}_{S2}
-=
-[
-B2,B3,B4,B8,B11,B12,
-NDVI,NDWI,NDBI
-]
-$$
+$$ \mathbf{x}_{S2} = [ B2,B3,B4,B8,B11,B12, NDVI,NDWI,NDBI ] $$
 
 ### Random Forest
 
 ถ้ามี decision trees จำนวน $B$ ต้น
 
-$$
-\hat{y}
-=
-\operatorname{mode}
-\left[
-h_1(\mathbf{x}),
-h_2(\mathbf{x}),
-\dots,
-h_B(\mathbf{x})
-\right]
-$$
+$$ \hat{y} = \operatorname{mode} \left[ h_1(\mathbf{x}), h_2(\mathbf{x}), \dots, h_B(\mathbf{x}) \right] $$
 
 ### Confusion matrix
 
@@ -253,34 +211,19 @@ $$
 
 ### Overall Accuracy
 
-$$
-OA =
-\frac{\sum_i n_{ii}}{N}
-$$
+$$ OA = \frac{\sum_i n_{ii}}{N} $$
 
 ### Producer's Accuracy
 
-$$
-PA_i =
-\frac{n_{ii}}
-{\sum_j n_{ij}}
-$$
+$$ PA_i = \frac{n_{ii}} {\sum_j n_{ij}} $$
 
 ### User's Accuracy
 
-$$
-UA_i =
-\frac{n_{ii}}
-{\sum_j n_{ji}}
-$$
+$$ UA_i = \frac{n_{ii}} {\sum_j n_{ji}} $$
 
 ### F1 score
 
-$$
-F1_i =
-\frac{2(PA_i)(UA_i)}
-{PA_i+UA_i}
-$$
+$$ F1_i = \frac{2(PA_i)(UA_i)} {PA_i+UA_i} $$
 
 ## What you will produce
 
@@ -324,53 +267,31 @@ Controlled experiment
 
 ### Training-window area
 
-$$
-A_{window}=w\times h
-$$
+$$ A_{window}=w\times h $$
 
 สำหรับ 20 × 20 m:
 
-$$
-A_{window}=400~m^2
-$$
+$$ A_{window}=400~m^2 $$
 
 สำหรับ Sentinel-2 10-m pixel:
 
-$$
-A_{pixel}\approx100~m^2
-$$
+$$ A_{pixel}\approx100~m^2 $$
 
 จำนวน output-grid pixels โดยประมาณ:
 
-$$
-n
-\approx
-\frac{A_{window}}
-{A_{pixel}}
-$$
+$$ n \approx \frac{A_{window}} {A_{pixel}} $$
 
 ### Mixed pixel
 
-$$
-R_{pixel}
-\approx
-\sum_{k=1}^{K}
-f_kR_k
-$$
+$$ R_{pixel} \approx \sum_{k=1}^{K} f_kR_k $$
 
 โดย
 
-$$
-\sum_{k=1}^{K}f_k=1
-$$
+$$ \sum_{k=1}^{K}f_k=1 $$
 
 ### Independent sampling concept
 
-$$
-n_{pixels}
-\neq
-n_{independent\ locations}
-$$
+$$ n_{pixels} \neq n_{independent\ locations} $$
 
 > **Training quantity ≠ Training quality**
 
@@ -420,88 +341,37 @@ Temporal signature
 
 ### Backscatter in decibels
 
-$$
-\sigma^0_{dB}
-=
-10\log_{10}
-\left(
-\sigma^0_{linear}
-\right)
-$$
+$$ \sigma^0_{dB} = 10\log_{10} \left( \sigma^0_{linear} \right) $$
 
 ### Back to linear domain
 
-$$
-\sigma^0_{linear}
-=
-10^{\sigma^0_{dB}/10}
-$$
+$$ \sigma^0_{linear} = 10^{\sigma^0_{dB}/10} $$
 
 ดังนั้น -10 dB มี backscatter สูงกว่า -20 dB
 
 ### Polarization contrast
 
-$$
-D_{VV-VH}
-=
-VV_{dB}-VH_{dB}
-$$
+$$ D_{VV-VH} = VV_{dB}-VH_{dB} $$
 
 ซึ่งสัมพันธ์กับ linear ratio:
 
-$$
-VV_{dB}-VH_{dB}
-=
-10\log_{10}
-\left(
-\frac{VV_{linear}}
-{VH_{linear}}
-\right)
-$$
+$$ VV_{dB}-VH_{dB} = 10\log_{10} \left( \frac{VV_{linear}} {VH_{linear}} \right) $$
 
 ### Conceptual radar response
 
-$$
-\sigma^0
-=
-f(
-\text{roughness},
-\text{moisture},
-\text{structure},
-\theta_i,
-\text{geometry},
-\dots
-)
-$$
+$$ \sigma^0 = f( \text{roughness}, \text{moisture}, \text{structure}, \theta_i, \text{geometry}, \dots ) $$
 
 ### Monthly class signature
 
 สำหรับ class $c$ และเดือน $m$
 
-$$
-\tilde{\sigma}^{0}_{c,m}
-=
-\operatorname{median}
-\left(
-\sigma^{0}_{i,m}
-\right)
-$$
+$$ \tilde{\sigma}^{0}_{c,m} = \operatorname{median} \left( \sigma^{0}_{i,m} \right) $$
 
 ### Annual SAR feature vector
 
-$$
-\mathbf{x}_{S1}
-=
-[
-VV_{Jan},VH_{Jan},
-\dots,
-VV_{Dec},VH_{Dec}
-]
-$$
+$$ \mathbf{x}_{S1} = [ VV_{Jan},VH_{Jan}, \dots, VV_{Dec},VH_{Dec} ] $$
 
-$$
-p=24
-$$
+$$ p=24 $$
 
 ## What you will produce
 
@@ -549,73 +419,31 @@ January–December SAR
 
 ### January baseline
 
-$$
-\mathbf{x}^{Jan}
-=
-[
-VV_{Jan},
-VH_{Jan}
-]
-$$
+$$ \mathbf{x}^{Jan} = [ VV_{Jan}, VH_{Jan} ] $$
 
-$$
-p=2
-$$
+$$ p=2 $$
 
 ### Annual multitemporal SAR
 
-$$
-\mathbf{x}^{Annual}
-=
-[
-VV_{Jan},VH_{Jan},
-\dots,
-VV_{Dec},VH_{Dec}
-]
-$$
+$$ \mathbf{x}^{Annual} = [ VV_{Jan},VH_{Jan}, \dots, VV_{Dec},VH_{Dec} ] $$
 
-$$
-p=24
-$$
+$$ p=24 $$
 
 ### Change in Overall Accuracy
 
-$$
-\Delta OA
-=
-OA_{Annual}
--
-OA_{Jan}
-$$
+$$ \Delta OA = OA_{Annual} - OA_{Jan} $$
 
 ### Class-specific change
 
-$$
-\Delta F1_i
-=
-F1_{Annual,i}
--
-F1_{Jan,i}
-$$
+$$ \Delta F1_i = F1_{Annual,i} - F1_{Jan,i} $$
 
 ### Normalized variable importance
 
-$$
-I_j^*
-=
-\frac{I_j}
-{\sum_{k=1}^{p}I_k}
-$$
+$$ I_j^* = \frac{I_j} {\sum_{k=1}^{p}I_k} $$
 
 ### Importance aggregated by month
 
-$$
-I_m
-=
-I_{VV_m}
-+
-I_{VH_m}
-$$
+$$ I_m = I_{VV_m} + I_{VH_m} $$
 
 > **Variable importance does not imply causation.**
 
@@ -661,82 +489,37 @@ GeoTIFF outputs
 
 ### Sentinel-2 feature space
 
-$$
-\mathbf{x}_{S2}\in\mathbb{R}^{9}
-$$
+$$ \mathbf{x}_{S2}\in\mathbb{R}^{9} $$
 
 ### January Sentinel-1 feature space
 
-$$
-\mathbf{x}_{S1,Jan}\in\mathbb{R}^{2}
-$$
+$$ \mathbf{x}_{S1,Jan}\in\mathbb{R}^{2} $$
 
 ### Same-period fusion
 
-$$
-\mathbf{x}_{Fusion,Jan}
-=
-[
-\mathbf{x}_{S2},
-\mathbf{x}_{S1,Jan}
-]
-$$
+$$ \mathbf{x}_{Fusion,Jan} = [ \mathbf{x}_{S2}, \mathbf{x}_{S1,Jan} ] $$
 
-$$
-p=11
-$$
+$$ p=11 $$
 
 ### Optical + annual SAR fusion
 
-$$
-\mathbf{x}_{Fusion,Annual}
-=
-[
-\mathbf{x}_{S2},
-\mathbf{x}_{S1,Annual}
-]
-$$
+$$ \mathbf{x}_{Fusion,Annual} = [ \mathbf{x}_{S2}, \mathbf{x}_{S1,Annual} ] $$
 
-$$
-p=33
-$$
+$$ p=33 $$
 
 ### Common valid-data support
 
-$$
-M_{common}
-=
-M_{S2}
-\cap
-M_{S1}
-$$
+$$ M_{common} = M_{S2} \cap M_{S1} $$
 
 ### Sensor-level importance
 
-$$
-I_{S2}
-=
-\sum_{j\in S2}
-I_j^*
-$$
+$$ I_{S2} = \sum_{j\in S2} I_j^* $$
 
-$$
-I_{S1}
-=
-\sum_{j\in S1}
-I_j^*
-$$
+$$ I_{S1} = \sum_{j\in S1} I_j^* $$
 
 ### Spatial disagreement
 
-$$
-D(x)
-=
-\begin{cases}
-0, & C_A(x)=C_B(x) \\
-1, & C_A(x)\neq C_B(x)
-\end{cases}
-$$
+$$ D(x) = \begin{cases} 0, & C_A(x)=C_B(x) \\ 1, & C_A(x)\neq C_B(x) \end{cases} $$
 
 > **Disagreement does not automatically mean error.**
 
@@ -773,11 +556,7 @@ same-period optical–SAR fusion ให้ผลดีที่สุดใน h
 
 Validation set มี 30 จุด ดังนั้น validation point หนึ่งจุดคิดเป็น
 
-$$
-\frac{1}{30}\times100
-=
-3.33\%
-$$
+$$ \frac{1}{30}\times100 = 3.33\% $$
 
 ของ Overall Accuracy
 
